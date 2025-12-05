@@ -1,16 +1,53 @@
-# React + Vite
+# BloodCare
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+BloodCare is a life-saving digital platform connecting blood donors with receivers in urgent need. It creates a unified ecosystem where voluntary donors, patients, and blood banks collaborate seamlessly to ensure timely blood support when it matters most.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Why BloodCare?
 
-## React Compiler
+In medical emergencies, every second determines survival. Many patients struggle to find a matching donor in time.  
+BloodCare is designed to solve this life-critical challenge by:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Providing a centralized donor search platform  
+- Enabling instant blood request communication  
+- Bringing donors and receivers closer than ever with real-time support  
 
-## Expanding the ESLint configuration
+**Our mission:**  
+No one should lose a life due to the unavailability of blood.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Core Features
+
+- Donor & Receiver Authentication System
+- Search Donors by Blood Group and City
+- Send & Receive Blood Requests Instantly
+- Donor Availability Status Updates
+- Smooth Communication Between Donor and Recipient
+- User-Friendly Interface with Real-Time Results
+- Secure & Privacy-Focused Data Handling
+
+---
+
+## Tech Stack
+
+| Category | Technologies |
+|---------|--------------|
+| Frontend | React.js, Tailwind CSS or CSS3 |
+| Backend | Node.js, Express.js, Socket.io |
+| Database | MongoDB |
+| Deployment | Vercel |
+
+---
+
+## Contribution
+
+Contributions are welcome.  
+Feel free to fork this repo and create pull requests to improve features, UI, or performance.
+
+---
+
+## Support
+
+If this project inspires you, give it a star. Together, we can save lives.
