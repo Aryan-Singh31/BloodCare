@@ -3,22 +3,13 @@ import mongoose from "mongoose";
 
 const donorSchema = new mongoose.Schema(
   {
-    fullName: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    email: {
-      type: String,
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
       unique: true,
-      lowercase: true,
     },
-    phone: {
-      type: String,
-      required: true,
-    },
-    password: {
+    fullName: {
       type: String,
       required: true,
     },
@@ -29,10 +20,13 @@ const donorSchema = new mongoose.Schema(
     city: {
       type: String,
       required: true,
+    },
+    phone: {
+      type: String,
+      required: true,
     }
   },
   { timestamps: true }
 );
 
-const Donor = mongoose.model("Donor", donorSchema);
-export default Donor;
+export default mongoose.model("Donor", donorSchema);

@@ -25,7 +25,7 @@ export default function Login() {
 
       login(res.data); // Saves user to AuthContext
       alert("Login successful!");
-      navigate("/search");
+      navigate("/");
       
     } catch (error) {
       alert(error.response?.data?.message || "Invalid login credentials");

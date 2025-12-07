@@ -1,21 +1,17 @@
 // backend/routes/donorRoutes.js
 import express from "express";
-import { protect } from "../middleware/authMiddleware.js"; 
+import { protect } from "../middleware/authMiddleware.js";
 import {
   registerAsDonor,
-  searchDonors,
-  getAllDonors
+  searchDonors
 } from "../controllers/donorController.js";
 
 const router = express.Router();
 
-// REGISTER as a donor (Login Required)
+// REGISTER as donor (Login Required)
 router.post("/register", protect, registerAsDonor);
 
-// GET all donors
-router.get("/", getAllDonors);
-
-// SEARCH donors by city + blood group
+// SEARCH donors by filters
 router.get("/search", searchDonors);
 
 export default router;

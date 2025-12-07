@@ -37,7 +37,7 @@ export default function Donate() {
       });
 
       alert("Successfully registered as a donor!");
-      navigate("/search");
+      navigate("/");
     } catch (err) {
       console.error(err);
       alert("Failed to register as donor");

@@ -43,6 +43,9 @@ export default function Navbar() {
               >
                 Logout
               </button>
+              <Link to="/messages">Messages</Link>
+
+              
             </>
           ) : (
             <Link

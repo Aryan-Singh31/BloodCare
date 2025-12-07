@@ -4,73 +4,66 @@ import dotenv from "dotenv";
 import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
-
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import donorRoutes from "./routes/donorRoutes.js";
-import Chat from "./models/Chat.js"; // NEW Import
+import chatRoutes from "./routes/chatRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import Chat from "./models/Chat.js";
 
 dotenv.config();
 connectDB();
 
 const app = express();
 
-// Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true,
+}));
 
-// Routes
-app.get("/", (req, res) => {
-  res.send("BloodCare API is running");
-});
+app.get("/", (req, res) => res.send("BloodCare API running"));
 
 app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
 app.use("/api/donors", donorRoutes);
+app.use("/api/chat", chatRoutes);
 
-// Create HTTP server for socket.io
 const server = http.createServer(app);
-
-// Socket.io setup
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST"],
   },
 });
 
-// Socket Logic: One-to-one chat
+// SOCKET LOGIC
 io.on("connection", (socket) => {
   console.log("Socket connected:", socket.id);
 
-  // Joining specific chat room
-  socket.on("join-room", (room) => {
-    socket.join(room);
-  });
+  socket.on("join-room", (room) => socket.join(room));
 
-  // Private messaging handler
   socket.on("send-private-msg", async (data) => {
-    const { room, sender, receiver, message } = data;
+    try {
+      const chat = await Chat.create(data);
 
-    // Save chat in DB
-    await Chat.create({ room, sender, receiver, message });
-
-    // Emit message to specific room only
-    io.to(room).emit("receive-private-msg", data);
+      io.to(data.room).emit("receive-private-msg", {
+        ...data,
+        _id: chat._id,
+        createdAt: chat.createdAt,
+      });
+    } catch (error) {
+      console.error("Chat DB error:", error);
+    }
   });
 
-  socket.on("disconnect", () => {
-    console.log("Socket disconnected:", socket.id);
-  });
+  socket.on("disconnect", () =>
+    console.log("Socket disconnected:", socket.id)
+  );
 });
 
-const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+server.listen(5000, () =>
+  console.log(`Server running on http://localhost:5000`)
+);

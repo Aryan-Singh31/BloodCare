@@ -15,6 +15,7 @@ import AboutUs from "./pages/AboutUs";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute"; // NEW
+import Inbox from "./pages/Inbox"; // NEW
 
 function App() {
   useEffect(() => {
@@ -47,7 +48,17 @@ function App() {
       </ProtectedRoute>
     }
   />
+  <Route
+  path="/messages"
+  element={
+    <ProtectedRoute>
+      <Inbox />
+    </ProtectedRoute>
+  }
+/>
 </Routes>
+
+
 
 
       <Footer />

@@ -1,3 +1,4 @@
+// src/context/AuthContext.js
 import { createContext, useContext, useState, useEffect } from "react";
 import API from "../api";
 
@@ -5,17 +6,22 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  
-  // Auto-load user if token exists
+  const [loading, setLoading] = useState(true); // NEW
+
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
-      API.get("/auth/me", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then(res => setUser(res.data))
-        .catch(() => setUser(null));
+
+    if (!token) {
+      setLoading(false);
+      return;
     }
+
+    API.get("/auth/me", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then(res => setUser(res.data))
+      .catch(() => setUser(null))
+      .finally(() => setLoading(false)); // NEW
   }, []);
 
   const login = (data) => {
@@ -29,7 +35,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
