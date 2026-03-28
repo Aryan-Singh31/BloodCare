@@ -59,7 +59,7 @@ export default function SplashScreen({ onDone }) {
             BloodCare
           </h1>
           <p className="text-red-100 text-sm mt-1.5 tracking-widest uppercase font-medium">
-            Donate Blood Â· Save Lives
+            Donate Blood And Save Lives.
           </p>
         </div>
 
