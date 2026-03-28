@@ -1,6 +1,6 @@
 // src/App.jsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -14,17 +14,18 @@ import AboutUs from "./pages/AboutUs";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import ProtectedRoute from "./components/ProtectedRoute"; // NEW
-import Inbox from "./pages/Inbox"; // NEW
+import ProtectedRoute from "./components/ProtectedRoute";
+import Inbox from "./pages/Inbox";
+import SplashScreen from "./components/SplashScreen";
 
 function App() {
+  const [splash, setSplash] = useState(true);
+
   useEffect(() => {
-    AOS.init({
-      duration: 900,
-      once: true,
-      easing: "ease-in-out",
-    });
+    AOS.init({ duration: 900, once: true, easing: "ease-in-out" });
   }, []);
+
+  if (splash) return <SplashScreen onDone={() => setSplash(false)} />;
 
   return (
     <BrowserRouter>
