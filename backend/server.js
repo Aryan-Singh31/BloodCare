@@ -1,6 +1,8 @@
 // backend/server.js
-import express from "express";
 import dotenv from "dotenv";
+dotenv.config(); // must be first before any other imports read process.env
+
+import express from "express";
 import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
@@ -11,7 +13,6 @@ import chatRoutes from "./routes/chatRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import Chat from "./models/Chat.js";
 
-dotenv.config();
 connectDB();
 
 const app = express();
