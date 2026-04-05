@@ -99,17 +99,10 @@ export default function SearchDonor() {
             results.map((donor, index) => (
               <div
                 key={donor._id || index}
-                className="bg-white p-4 rounded-xl shadow border border-gray-200"
+                className="bg-white rounded-xl shadow border border-gray-200"
                 data-aos="fade-up"
               >
                 <DonorCard donor={donor} />
-
-                <button
-                  className="text-sm mt-2 text-blue-600 hover:underline"
-                  onClick={() => navigate(`/chat/${donor._id}`)}
-                >
-                  Chat with {donor.fullName}
-                </button>
               </div>
             ))
           ) : (

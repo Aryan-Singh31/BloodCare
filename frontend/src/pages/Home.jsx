@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
-import { HeartPulse, Search, MessageCircle, Users, Droplets, ShieldCheck } from "lucide-react";
+import { useEffect, useState } from "react";
+import { HeartPulse, Search, Users, Droplets, ShieldCheck, AlertTriangle, MapPin, Clock, ArrowRight } from "lucide-react";
+import API from "../api";
 import HeroImg from "../assets/images/hero.jpg";
 import Step1 from "../assets/images/step1.jpg";
 import Step2 from "../assets/images/step2.jpg";
@@ -7,7 +9,6 @@ import Step3 from "../assets/images/step3.jpg";
 import Avatar1 from "../assets/images/avatar1.jpg";
 import Avatar2 from "../assets/images/avatar2.jpg";
 import Avatar3 from "../assets/images/avatar3.jpg";
-
 const stats = [
   { icon: Users, value: "10,000+", label: "Registered Donors" },
   { icon: Droplets, value: "5,000+", label: "Lives Saved" },
@@ -21,6 +22,15 @@ const steps = [
 ];
 
 export default function Home() {
+  const [requests, setRequests] = useState([]);
+
+  useEffect(() => {
+    API.get("/requests").then((r) => setRequests(r.data.slice(0, 3))).catch(() => {});
+  }, []);
+
+  const urgencyColor = { normal: "bg-green-100 text-green-700", urgent: "bg-yellow-100 text-yellow-700", critical: "bg-red-100 text-red-700" };
+  const bgColor = { "A+":"bg-red-500","A-":"bg-red-400","B+":"bg-rose-500","B-":"bg-rose-400","O+":"bg-orange-500","O-":"bg-orange-400","AB+":"bg-purple-500","AB-":"bg-purple-400" };
+  const timeAgo = (d) => { const s = Math.floor((Date.now()-new Date(d))/1000); if(s<3600) return `${Math.floor(s/60)}m ago`; if(s<86400) return `${Math.floor(s/3600)}h ago`; return `${Math.floor(s/86400)}d ago`; };
   return (
     <div className="min-h-screen bg-white">
 
@@ -129,6 +139,48 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* ── LIVE BLOOD REQUESTS ──────────────────────────────────────────── */}
+      {requests.length > 0 && (
+        <section className="max-w-6xl mx-auto px-4 pb-16">
+          <div className="flex items-center justify-between mb-6" data-aos="fade-up">
+            <div>
+              <span className="text-xs font-semibold text-red-600 uppercase tracking-widest">Live Feed</span>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 mt-1">
+                Urgent <span className="text-red-600">Blood Requests</span>
+              </h2>
+            </div>
+            <Link to="/requests" className="text-sm text-red-600 font-semibold hover:underline flex items-center gap-1">
+              View all <ArrowRight size={14} />
+            </Link>
+          </div>
+          <div className="grid md:grid-cols-3 gap-4">
+            {requests.map((r, i) => (
+              <div key={r._id} data-aos="fade-up" data-aos-delay={i * 100}
+                className="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden hover:shadow-lg transition group">
+                <div className="flex items-stretch">
+                  <div className={`${bgColor[r.bloodGroup] || "bg-red-500"} w-14 flex flex-col items-center justify-center text-white shrink-0`}>
+                    <span className="text-lg font-extrabold leading-none">{r.bloodGroup}</span>
+                  </div>
+                  <div className="p-3 flex-1">
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="font-bold text-gray-900 text-sm truncate">{r.patientName}</p>
+                      <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${urgencyColor[r.urgency]}`}>{r.urgency}</span>
+                    </div>
+                    <div className="flex flex-wrap gap-2 text-[11px] text-gray-400">
+                      <span className="flex items-center gap-0.5"><MapPin size={10} />{r.city}</span>
+                      <span className="flex items-center gap-0.5"><Clock size={10} />{timeAgo(r.createdAt)}</span>
+                    </div>
+                    <Link to="/requests" className="mt-2 inline-flex items-center gap-1 text-xs text-red-600 font-semibold hover:underline">
+                      Respond <ArrowRight size={11} />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ── CTA BANNER ───────────────────────────────────────────────────── */}
       <section className="py-20 px-4" data-aos="fade-up">

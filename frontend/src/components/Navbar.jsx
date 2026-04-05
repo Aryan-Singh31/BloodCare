@@ -65,6 +65,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-6">
           {navLink("/", "Home")}
           {navLink("/search", "Search")}
+          {navLink("/requests", "Blood Requests")}
           {navLink("/aboutus", "About Us")}
 
           <Link to="/donate"
@@ -106,6 +107,7 @@ export default function Navbar() {
         <div className="md:hidden bg-white border-t border-gray-100 px-6 py-4 space-y-3 shadow-lg">
           {navLink("/", "Home")}
           {navLink("/search", "Search")}
+          {navLink("/requests", "Blood Requests")}
           {navLink("/aboutus", "About Us")}
           <Link to="/donate" onClick={() => setOpen(false)}
             className="block bg-red-600 text-white text-sm font-semibold px-4 py-2.5 rounded-full text-center hover:bg-red-700 transition">

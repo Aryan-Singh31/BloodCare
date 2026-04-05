@@ -18,6 +18,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Inbox from "./pages/Inbox";
 import SplashScreen from "./components/SplashScreen";
 import ChatBot from "./components/ChatBot";
+import BloodRequests from "./pages/BloodRequests";
 
 function App() {
   const [splash, setSplash] = useState(true);
@@ -40,6 +41,7 @@ function App() {
   <Route path="/aboutus" element={<AboutUs />} />
   <Route path="/donate" element={<Donate />} />
   <Route path="/search" element={<SearchDonor />} />
+  <Route path="/requests" element={<BloodRequests />} />
 
   {/* PROTECTED CHAT ONLY */}
   <Route

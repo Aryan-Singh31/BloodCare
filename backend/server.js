@@ -11,6 +11,8 @@ import authRoutes from "./routes/authRoutes.js";
 import donorRoutes from "./routes/donorRoutes.js";
 import chatRoutes from "./routes/chatRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import bloodRequestRoutes from "./routes/bloodRequestRoutes.js";
+import notificationRoutes from "./routes/notificationRoutes.js";
 import Chat from "./models/Chat.js";
 
 connectDB();
@@ -31,6 +33,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/donors", donorRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/requests", bloodRequestRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 const server = http.createServer(app);
 const io = new Server(server, {
