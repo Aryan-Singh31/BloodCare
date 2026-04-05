@@ -1,5 +1,5 @@
 ﻿import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, Bot, User, Loader } from "lucide-react";
+import { X, Send, Bot, User, Loader } from "lucide-react";
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
@@ -100,12 +100,46 @@ export default function ChatBot() {
       {/* Floating button */}
       <button
         onClick={() => setOpen(!open)}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-br from-red-600 to-rose-600 text-white rounded-full shadow-2xl flex items-center justify-center hover:from-red-700 hover:to-rose-700 transition-all hover:scale-110 active:scale-95"
+        className="fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full shadow-2xl transition-all hover:scale-110 active:scale-95 overflow-hidden border-2 border-white"
         title="BloodCare Assistant"
+        style={{ background: "linear-gradient(135deg, #b91c1c, #e11d48)" }}
       >
-        {open ? <X size={22} /> : <MessageCircle size={22} />}
+        {open ? (
+          <span className="flex items-center justify-center w-full h-full">
+            <X size={24} className="text-white" />
+          </span>
+        ) : (
+          /* Custom AI assistant SVG face */
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+            {/* bg circle glow */}
+            <circle cx="32" cy="32" r="32" fill="url(#btnGrad)" />
+            <defs>
+              <radialGradient id="btnGrad" cx="40%" cy="35%" r="65%">
+                <stop offset="0%" stopColor="#f87171" />
+                <stop offset="100%" stopColor="#9f1239" />
+              </radialGradient>
+            </defs>
+            {/* head */}
+            <rect x="16" y="18" width="32" height="26" rx="10" fill="white" fillOpacity="0.95" />
+            {/* antenna */}
+            <line x1="32" y1="18" x2="32" y2="11" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
+            <circle cx="32" cy="9" r="3" fill="white" />
+            {/* eyes */}
+            <circle cx="24" cy="29" r="4" fill="#dc2626" />
+            <circle cx="40" cy="29" r="4" fill="#dc2626" />
+            <circle cx="25.2" cy="27.8" r="1.4" fill="white" />
+            <circle cx="41.2" cy="27.8" r="1.4" fill="white" />
+            {/* smile */}
+            <path d="M24 36 Q32 42 40 36" stroke="#dc2626" strokeWidth="2.2" strokeLinecap="round" fill="none" />
+            {/* ears */}
+            <rect x="11" y="25" width="5" height="8" rx="2.5" fill="white" fillOpacity="0.9" />
+            <rect x="48" y="25" width="5" height="8" rx="2.5" fill="white" fillOpacity="0.9" />
+            {/* heart on chest */}
+            <path d="M29 46 Q29 43 32 45 Q35 43 35 46 Q35 49 32 51 Q29 49 29 46Z" fill="white" fillOpacity="0.7" />
+          </svg>
+        )}
         {!open && unread > 0 && (
-          <span className="absolute -top-1 -right-1 w-5 h-5 bg-yellow-400 text-gray-900 text-[10px] font-bold rounded-full flex items-center justify-center shadow">
+          <span className="absolute -top-1 -right-1 w-5 h-5 bg-yellow-400 text-gray-900 text-[10px] font-bold rounded-full flex items-center justify-center shadow border border-white">
             {unread}
           </span>
         )}
