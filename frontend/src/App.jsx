@@ -17,6 +17,7 @@ import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Inbox from "./pages/Inbox";
 import SplashScreen from "./components/SplashScreen";
+import ChatBot from "./components/ChatBot";
 
 function App() {
   const [splash, setSplash] = useState(true);
@@ -63,6 +64,7 @@ function App() {
 
 
       <Footer />
+      <ChatBot />
     </BrowserRouter>
   );
 }
