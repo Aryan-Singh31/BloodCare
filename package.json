@@ -1,0 +1,14 @@
+{
+  "name": "bloodcare",
+  "version": "1.0.0",
+  "description": "AI Integrated Blood Donor & Receiver Platform",
+  "scripts": {
+    "install-all": "cd server && npm install && cd ../client && npm install",
+    "dev-server": "cd server && npm run dev",
+    "dev-client": "cd client && npm start",
+    "dev": "concurrently \"npm run dev-server\" \"npm run dev-client\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
